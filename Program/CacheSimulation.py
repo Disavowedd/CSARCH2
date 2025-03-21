@@ -1,6 +1,7 @@
 import random
 from PyQt5.QtWidgets import QApplication,QWidget,QHBoxLayout,QAbstractItemView,QTableWidgetItem,QPushButton,QLabel,QVBoxLayout,QComboBox,QTextEdit,QTableWidget,QSizePolicy,QSpinBox,QHeaderView,QGroupBox,QGridLayout
 import sys
+import time
 cache_blocks = 32 #2^5
 cache_line = 16 #2^4
 sets = 4 #2^2
@@ -129,17 +130,113 @@ class CacheSimulator(QWidget):
         self.setLayout(main_layout)
     
     def start_simulation(self):
+        #Current problem, theoretically for sequential 1st pass should be all misses (might be wrong on this)
+        #Currently for 1024 blocks in sequential, it only has 416 misses. Should be 2048 i think
+        #(1024 MM Block x 2) x 4 repetitions = 8192 accesses
+        #I think problem might be in MRU? 
         memory_blocks = self.memory_size_qinput.value()
         test_case = self.test_case_qselect.currentText()
-        total_access,cache_hit,cache_miss,hit_rate,miss_rate,avg_mem_access_time,total_mem_access_time = (0,0,0,0,0,0,0)
+
+        cache_blocks = 32
+        sets = 4
+        ways = cache_blocks // sets
+
+        tag = 6  
+
+        cache = [[{'tag': None, 'valid': False, 'mru': 0} for _ in range(ways)] for _ in range(sets)]
+
+        total_access, cache_hit, cache_miss = 0, 0, 0
+        total_mem_access_time = 0
+
         self.log_output.append(f"Simulation Started with {memory_blocks} memory blocks and {test_case} test case")
-        self.log_output.append(f"Simulation Completed")
+        self.log_output.append(f"{'Access':<10}{'Set':<5}{'Tag':<10}{'Result':<6}{'Access Time':<10}")
+        self.log_output.append("=" * 50)
+
+        #this section should be correct
+        if test_case == "Sequential":
+            sequence = [(i % (2 * memory_blocks)) for _ in range(4) for i in range(2 * memory_blocks)]
+        elif test_case == "Random":
+            sequence = [random.randint(0, memory_blocks - 1) for _ in range(4 * memory_blocks)]
+        elif test_case == "Mid-Repeat":
+            mid = memory_blocks // 2
+            sequence = [(mid + i % mid) if i % 2 == 0 else (i % memory_blocks) for i in range(2 * memory_blocks)]
+        else:
+            sequence = []
+        #Cache mapping, not sure about this
+        for memory_block in sequence:
+            total_access += 1
+
+            set_index = memory_block % sets # based on slides
+            block_tag = memory_block >> tag # not sure on this, should be shifting to tag bits for same sets
+
+            hit = False
+
+            for way in range(ways):
+                if cache[set_index][way]['valid'] and cache[set_index][way]['tag'] == block_tag:
+                    cache_hit += 1
+                    cache[set_index][way]['mru'] = time.time()
+                    hit = True
+                    result = "HIT"
+                    break
+
+            if not hit:
+                cache_miss += 1
+                #this basically checks for any empty block in set b4 trying MRU
+                empty_block = next((way for way in range(ways) if not cache[set_index][way]['valid']), None)
+
+                if empty_block is not None:
+                    cache[set_index][empty_block] = {
+                        'tag': block_tag,
+                        'valid': True,
+                        'mru': time.time()
+                    }
+                    result = "MISS"
+                else: #this is the MRU replacement, not sure on this as well
+                    mru_way = max(cache[set_index], key=lambda b: b['mru']) #basically looks for highest MRU
+                    mru_index = cache[set_index].index(mru_way)
+
+                    cache[set_index][mru_index] = {
+                        'tag': block_tag,
+                        'valid': True,
+                        'mru': time.time()
+                    }
+                    result = "REPLACE"
+
+            access_time = 1 if hit else 100
+            total_mem_access_time += access_time
+
+            self.log_output.append(f"{memory_block:<10}{set_index:<5}{block_tag:<10}{result:<6}{access_time:<10}ns")
+
+        self.log_output.append("\nFinal Cache State:")
+        for set_index in range(sets):
+            self.log_output.append(f"Set {set_index}:")
+            for way in range(ways):
+                block = cache[set_index][way]
+                tag_display = block['tag'] if block['valid'] else "None"
+                self.log_output.append(f"  Way {way}: Tag={tag_display}, MRU={block['mru']:.6f}, Valid={block['valid']}")
+
+                tag_value = str(block['tag']) if block['valid'] else "None"
+                self.cache_qtable.setItem(set_index, way + 1, QTableWidgetItem(tag_value))
+
+        hit_rate = (cache_hit / total_access) * 100 if total_access > 0 else 0
+        miss_rate = (cache_miss / total_access) * 100 if total_access > 0 else 0
+        avg_mem_access_time = total_mem_access_time / total_access if total_access > 0 else 0
+
+        self.log_output.append("\nFinal Statistics:")
+        self.log_output.append(f"Total Accesses: {total_access}")
+        self.log_output.append(f"Cache Hits: {cache_hit}")
+        self.log_output.append(f"Cache Misses: {cache_miss}")
+        self.log_output.append(f"Hit Rate: {hit_rate:.2f}%")
+        self.log_output.append(f"Miss Rate: {miss_rate:.2f}%")
+        self.log_output.append(f"Avg Memory Access Time: {avg_mem_access_time:.2f}ns")
+        self.log_output.append(f"Total Memory Access Time: {total_mem_access_time}ns")
+
         self.memory_access_qstat.setText(f"{total_access}")
         self.cache_hit_qstat.setText(str(cache_hit))
         self.cache_miss_qstat.setText(str(cache_miss))
         self.cache_hit_rate_qstat.setText(f"{hit_rate:.2f}%")
         self.cache_miss_rate_qstat.setText(f"{miss_rate:.2f}%")
-        self.avg_memory_time_qstat.setText(f"{avg_mem_access_time}ns")
+        self.avg_memory_time_qstat.setText(f"{avg_mem_access_time:.2f}ns")
         self.total_memory_time_qstat.setText(f"{total_mem_access_time}ns")
 
 
