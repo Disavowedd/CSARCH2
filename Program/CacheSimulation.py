@@ -4,9 +4,11 @@ import sys
 cache_blocks = 32 #2^5
 cache_line = 16 #2^4
 sets = 8 #2^3
-#TAG  =
-#SET = 
-#WORD = 
+
+#tried
+#TAG = 32 - int(sets).bit_length() - int(cache_line).bit_length()
+#SET = int(sets).bit_length()
+#WORD = int(cache_line).bit_length()
 
 class CacheSimulator(QWidget):
     def __init__(self):
@@ -178,44 +180,56 @@ def random_test(self):
 
     #pass
 
+
+#TRIED ADDING
 def midrepeat_test(self):  
-    pass
+    memory_blocks = self.memory_size_qinput.value()
+    sequence = []
+
+    mid = memory_blocks // 2
+
+    for i in range(2 * memory_blocks):
+        if i % 2 == 0:
+            sequence.append(mid + i % mid)  # Repeat middle values more often
+        else:
+            sequence.append(i % memory_blocks)
+
+    return sequence
 
 
-def cache_replace(self, address): #Replace if it looks wrong 
+#TRIED MODIFYING
+def cache_replace(self, address):
     self.total_access += 1
 
-    
     memory_blocks = self.memory_size_qinput.value()
-
     
+    # MAPPING
+    # Extract set index and tag
     set_index = (address % memory_blocks) % sets
     tag = address // memory_blocks
 
-    
+    # Check if the tag already exists in the set
     for i in range(len(self.cache[set_index])):
         block = self.cache[set_index][i]
 
         if block['valid'] and block['tag'] == tag:
             self.cache_hit += 1
-            block['counter'] = self.total_access  
+            block['counter'] = self.total_access  # Update MRU status
             return True
 
-    
+    # If it's a miss
     self.cache_miss += 1
 
-   
-    mru_index = max(range(len(self.cache[set_index])), key=lambda i: self.cache[set_index][i]['counter'])
-
-  
-    self.cache[set_index][mru_index] = {
-        'tag': tag,
-        'valid': True,
-        'counter': self.total_access
-    }
+    # Find the MRU block to replace
+    if len(self.cache[set_index]) < cache_blocks // sets:
+        # If there's space, add directly
+        self.cache[set_index].append({'tag': tag, 'counter': self.total_access, 'valid': True})
+    else:
+        # Find the most recently used block
+        mru_index = max(range(len(self.cache[set_index])), key=lambda i: self.cache[set_index][i]['counter'])
+        self.cache[set_index][mru_index] = {'tag': tag, 'counter': self.total_access, 'valid': True}
 
     return False
-
 
 
 if __name__ == '__main__':
