@@ -39,6 +39,7 @@ class CacheSimulator(QWidget):
         self.cache_qtable.horizontalHeader().setSectionResizeMode(6, QHeaderView.Stretch)
         self.cache_qtable.horizontalHeader().setSectionResizeMode(7, QHeaderView.Stretch)
         self.cache_qtable.horizontalHeader().setSectionResizeMode(8, QHeaderView.Stretch)  
+        self.cache_qtable.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.cache_qtable.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.cache_qtable.verticalHeader().setVisible(False)
 
