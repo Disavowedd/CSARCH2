@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QApplication,QWidget,QHBoxLayout,QAbstractItemView,Q
 import sys
 cache_blocks = 32 #2^5
 cache_line = 16 #2^4
-sets = 8 #2^3
+sets = 4 #2^2
 
 #tried
 #TAG = 32 - int(sets).bit_length() - int(cache_line).bit_length()
@@ -34,7 +34,10 @@ class CacheSimulator(QWidget):
         self.cache_qtable.horizontalHeader().setSectionResizeMode(2, QHeaderView.Stretch)
         self.cache_qtable.horizontalHeader().setSectionResizeMode(3, QHeaderView.Stretch)
         self.cache_qtable.horizontalHeader().setSectionResizeMode(4, QHeaderView.Stretch)
-
+        self.cache_qtable.horizontalHeader().setSectionResizeMode(5, QHeaderView.Stretch)
+        self.cache_qtable.horizontalHeader().setSectionResizeMode(6, QHeaderView.Stretch)
+        self.cache_qtable.horizontalHeader().setSectionResizeMode(7, QHeaderView.Stretch)
+        self.cache_qtable.horizontalHeader().setSectionResizeMode(8, QHeaderView.Stretch)  
         self.cache_qtable.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.cache_qtable.verticalHeader().setVisible(False)
 
@@ -156,7 +159,7 @@ class CacheSimulator(QWidget):
 
 def intilialize_cache_table(self):
     self.cache_qtable.clear()
-    self.cache_qtable.setHorizontalHeaderLabels(["Set", "Block 0","Block 1","Block 2","Block 3"])
+    self.cache_qtable.setHorizontalHeaderLabels(["Set", "Block 0","Block 1","Block 2","Block 3","Block 4","Block 5","Block 6","Block 7"])
     for i in range(sets):
             item = QTableWidgetItem(str(i))
             self.cache_qtable.setItem(i, 0, item)
