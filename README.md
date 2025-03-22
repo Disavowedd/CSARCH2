@@ -55,7 +55,7 @@ Walkthrough Video: https://drive.google.com/file/d/1UB8l4Ye78i3JIy7V5gtWQ2NEWmql
 
 ### a.) **Sequential Sequence:**  
 **Initial Cache State and Memory Access Pattern:**  
-At the start, the cache is empty, so the first memory accesses result in cache misses. The set index is determined by:  
+- At the start, the cache is empty, so the first memory accesses result in cache misses. The set index is determined by:  
 **Set Index = (Block Number) mod (Number of Sets)**  
 
 Once sets are full, the MRU policy evicts the most recently used block, causing frequent replacements when new blocks are introduced. After the cache is populated, repeated access to the same blocks results in cache hits. 
@@ -86,7 +86,7 @@ The cache initially experiences high miss rates due to filling and MRU-based rep
 
 ### b.) **Random Sequence:**  
 **Initial Cache State and Memory Access Pattern:**  
-In the random sequence test case, the memory access pattern follows a random order, meaning that the accessed memory blocks are distributed without any predictable pattern. This type of access pattern is challenging for a cache to optimize because it lacks locality of reference, which makes it difficult for the cache to anticipate future accesses.  
+- In the random sequence test case, the memory access pattern follows a random order, meaning that the accessed memory blocks are distributed without any predictable pattern. This type of access pattern is challenging for a cache to optimize because it lacks locality of reference, which makes it difficult for the cache to anticipate future accesses.  
 
 At the start, the cache is initially empty. Since the accesses are random, there is no repetition or predictable order, causing frequent cache misses. The memory access count is **128**, which reflects the number of memory requests processed by the cache during the simulation.  
 
@@ -116,7 +116,7 @@ The low hit rate reflects the challenges posed by the random access pattern, whi
 
 ### c.) **Mid-Repeat Blocks:**  
 **Initial Cache State and Memory Access Pattern:**  
-In the mid-repeat blocks test case, the memory access pattern shows moderate levels of repetition, meaning that certain memory blocks are accessed multiple times after some interval. This creates an opportunity for the cache to benefit from **temporal locality** (recently accessed blocks being accessed again) and **spatial locality** (nearby blocks being accessed together). The cache starts in an empty state, leading to initial misses as it fills up. However, once the working set stabilizes and repeated blocks begin to be accessed, the hit rate improves.  
+- In the mid-repeat blocks test case, the memory access pattern shows moderate levels of repetition, meaning that certain memory blocks are accessed multiple times after some interval. This creates an opportunity for the cache to benefit from **temporal locality** (recently accessed blocks being accessed again) and **spatial locality** (nearby blocks being accessed together). The cache starts in an empty state, leading to initial misses as it fills up. However, once the working set stabilizes and repeated blocks begin to be accessed, the hit rate improves.  
 
 **Number of memory blocks:** 1024  
 
