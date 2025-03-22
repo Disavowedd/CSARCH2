@@ -137,3 +137,5 @@ The low hit rate reflects the challenges posed by the random access pattern, whi
 - The total memory access time is:  (196×16)+(184×177) = **35,704ns**
 
 The higher hit rate (compared to random access) reflects the benefit of repeating memory blocks, which allows the cache to take advantage of temporal locality. However, the hit rate is not perfect due to the moderate level of repetition and the working set exceeding the cache size at times, leading to evictions and subsequent misses.
+
+## Summary and Conclusion
