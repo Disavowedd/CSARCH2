@@ -1,5 +1,7 @@
 # **CSARCH2 Cache Simulator**
 
+Walkthrough Video: https://drive.google.com/file/d/1HipP0E3Icc1ru5rPXftYyo5O1583sHqi/view?usp=sharing
+
 ## **System Specifications**
 - **Cache Memory: 8-way BSA + MRU**
 - **Cache line size:** 16 words  
