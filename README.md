@@ -110,3 +110,28 @@ The low hit rate reflects the challenges posed by the random access pattern, whi
 
 
 ##### c.) Mid-Repeat Blocks: 
+**Initial Cache State and Memory Access Pattern:**
+In the mid-repeat blocks test case, the memory access pattern shows moderate levels of repetition, meaning that certain memory blocks are accessed multiple times after some interval. This creates an opportunity for the cache to benefit from temporal locality (recently accessed blocks being accessed again) and spatial locality (nearby blocks being accessed together). The cache starts in an empty state, leading to initial misses as it fills up. However, once the working set stabilizes and repeated blocks begin to be accessed, the hit rate improves.
+
+**Number of memory blocks: 1024**
+
+**FINAL CACHE MEMORY SNAPSHOT:**
+|  Set  |  Block 0  |  Block 1  |  Block 2  |  Block 3  |  Block 4  |  Block 5  |  Block 6  |  Block 7  |
+| :---: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: |
+| **0** |     0     |     8     |     16    |     24    |     48    |     52    |     56    |     60    |
+| **1** |     1     |     9     |     17    |     25    |     49    |     53    |     57    |     61    |
+| **2** |     2     |     10    |     18    |     26    |     50    |     54    |     58    |     62    |
+| **3** |     3     |     11    |     19    |     27    |     51    |     55    |     59    |     63    |
+
+**Cache Outputs and Performance:**
+The simulation records **380 memory accesses with 196 hits and 184 misses**, giving a **51.58% hit rate** and **48.42% miss rate**.
+
+The average memory access time is: (196×16)+(184×177)/380 = **93.96ns**
+where:
+- Cache hit time = 16 ns
+- Cache miss time = 177 ns
+
+The total memory access time is: (196×16)+(184×177) = **35,704ns**
+
+The higher hit rate (compared to random access) reflects the benefit of repeating memory blocks, which allows the cache to take advantage of temporal locality. However, the hit rate is not perfect due to the moderate level of repetition and the working set exceeding the cache size at times, leading to evictions and subsequent misses.
+
