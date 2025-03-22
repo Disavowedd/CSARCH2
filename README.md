@@ -87,8 +87,7 @@ The cache initially experiences high miss rates due to filling and MRU-based rep
 ### b.) **Random Sequence:**  
 **Initial Cache State and Memory Access Pattern:**  
 - In the random sequence test case, the memory access pattern follows a random order, meaning that the accessed memory blocks are distributed without any predictable pattern. This type of access pattern is challenging for a cache to optimize because it lacks locality of reference, which makes it difficult for the cache to anticipate future accesses.  
-
-At the start, the cache is initially empty. Since the accesses are random, there is no repetition or predictable order, causing frequent cache misses. The memory access count is **128**, which reflects the number of memory requests processed by the cache during the simulation.  
+- At the start, the cache is initially empty. Since the accesses are random, there is no repetition or predictable order, causing frequent cache misses. The memory access count is **128**, which reflects the number of memory requests processed by the cache during the simulation.  
 
 **Number of memory blocks:** 1024  
 
