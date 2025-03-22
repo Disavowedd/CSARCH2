@@ -1,6 +1,6 @@
 # **CSARCH2 Cache Simulator**
 
-Walkthrough Video: https://drive.google.com/file/d/1HipP0E3Icc1ru5rPXftYyo5O1583sHqi/view?usp=sharing
+Walkthrough Video: https://drive.google.com/file/d/1UB8l4Ye78i3JIy7V5gtWQ2NEWmql1cG7/view?usp=sharing
 
 #### Submitted by:
 ##### CSARCH2 S12 Group 8
