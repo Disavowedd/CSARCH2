@@ -52,9 +52,12 @@ Walkthrough Video: https://drive.google.com/file/d/1UB8l4Ye78i3JIy7V5gtWQ2NEWmql
 |   3   |         |         |         |         |         |         |         |         |
 
 ##### a.) Sequential Sequence:
-In this test case, memory accesses follow a sequential pattern, meaning that memory blocks are accessed in increasing order (0, 1, 2, 3, …, 63). The cache initially starts empty, so the first pass will result in a cache miss for every memory access until the cache is populated. The cache is using a Most Recently Used (MRU) replacement policy, which means that when the cache is full and a new block needs to be loaded, the most recently accessed block will be replaced.
+**Initial Cache State and Memory Access Pattern**
+At the start, the cache is empty, so the first memory accesses result in cache misses. The set index is determined by:
+Set Index= ( Block Number)mod(Number of Sets). Once sets are full, the MRU policy evicts the most recently used block, causing frequent replacements when new blocks are introduced. After the cache is populated, repeated access to the same blocks results in cache hits. 
 
 Number of memory blocks: 1024
+FINAL CACHE MEMORY SNAPSHOT:
 |  Set  |  Block 0  |  Block 1  |  Block 2  |  Block 3  |  Block 4  |  Block 5  |  Block 6  |  Block 7  |
 | :---: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: |
 | **0** |     0     |     4     |     8     |     12    |     48    |     52    |     56    |     60    |
@@ -62,7 +65,14 @@ Number of memory blocks: 1024
 | **2** |     2     |     6     |     10    |     14    |     50    |     54    |     58    |     62    |
 | **3** |     3     |     7     |     11    |     15    |     51    |     55    |     59    |     63    |
 
+The simulation records 256 memory accesses with 96 hits and 160 misses, giving a 37.50% hit rate and 62.50% miss rate. The average memory access time is: (96×16)+(160×177)/256 = 116.62ns
+where:
+- Cache hit time = 16 ns
+- Cache miss time = 177 ns
 
+The total memory access time is: 96×16+160×177 = 29856ns
+
+The cache initially experiences high miss rates due to filling and MRU-based replacements. However, once the working set stabilizes, hit rates improve, enhancing overall performance.
 
 ##### b.) Random Sequence
 ##### c.) Mid-Repeat Blocks: 
