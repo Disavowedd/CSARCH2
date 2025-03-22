@@ -57,7 +57,8 @@ Walkthrough Video: https://drive.google.com/file/d/1UB8l4Ye78i3JIy7V5gtWQ2NEWmql
 At the start, the cache is empty, so the first memory accesses result in cache misses. The set index is determined by:
 Set Index = (Block Number)mod(Number of Sets). Once sets are full, the MRU policy evicts the most recently used block, causing frequent replacements when new blocks are introduced. After the cache is populated, repeated access to the same blocks results in cache hits. 
 
-Number of memory blocks: 1024
+**Number of memory blocks: 1024**
+
 **FINAL CACHE MEMORY SNAPSHOT:**
 |  Set  |  Block 0  |  Block 1  |  Block 2  |  Block 3  |  Block 4  |  Block 5  |  Block 6  |  Block 7  |
 | :---: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: |
