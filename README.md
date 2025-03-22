@@ -42,19 +42,14 @@ Walkthrough Video: https://drive.google.com/file/d/1HipP0E3Icc1ru5rPXftYyo5O1583
   `0, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15` {repeated 4x}  
 
 ---
----
 ## Test Case Detail Analyses:
 ###### 8-way BSA Cache Table Format
 |  Set  | Block 0 | Block 1 | Block 2 | Block 3 | Block 4 | Block 5 | Block 6 | Block 7 |
 | :---: | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
 |   0   |         |         |         |         |         |         |         |         |
-|  Age  |         |         |         |         |         |         |         |         |
 |   1   |         |         |         |         |         |         |         |         |
-|  Age  |         |         |         |         |         |         |         |         |
 |   2   |         |         |         |         |         |         |         |         |
-|  Age  |         |         |         |         |         |         |         |         |
 |   3   |         |         |         |         |         |         |         |         |
-|  Age  |         |         |         |         |         |         |         |         |
 
 ##### a.) Sequential Sequence
 ##### b.) Random Sequence
