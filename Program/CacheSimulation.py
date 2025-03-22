@@ -151,8 +151,16 @@ class CacheSimulator(QWidget):
         elif test_case == "Random":
             sequence = [random.randint(0, memory_blocks - 1) for _ in range(4 * cache_blocks)]
         elif test_case == "Mid-Repeat":
-            mid = memory_blocks // 2
-            sequence = [(mid + i % mid) if i % 2 == 0 else (i % memory_blocks) for i in range(cache_blocks - 1)]
+            sequence = []
+    
+            base_sequence = list(range(cache_blocks))
+            sequence.extend(base_sequence)
+
+            sequence.extend(range(1, cache_blocks))
+
+            sequence.extend(range(cache_blocks, 2 * cache_blocks))
+
+            sequence *= 4  
         else:
             sequence = []
 
