@@ -51,6 +51,18 @@ Walkthrough Video: https://drive.google.com/file/d/1HipP0E3Icc1ru5rPXftYyo5O1583
 |   2   |         |         |         |         |         |         |         |         |
 |   3   |         |         |         |         |         |         |         |         |
 
-##### a.) Sequential Sequence
+##### a.) Sequential Sequence:
+In this test case, memory accesses follow a sequential pattern, meaning that memory blocks are accessed in increasing order (0, 1, 2, 3, …, 63). The cache initially starts empty, so the first pass will result in a cache miss for every memory access until the cache is populated. The cache is using a Most Recently Used (MRU) replacement policy, which means that when the cache is full and a new block needs to be loaded, the most recently accessed block will be replaced.
+
+Number of memory blocks: 1024
+|  Set  |  Block 0  |  Block 1  |  Block 2  |  Block 3  |  Block 4  |  Block 5  |  Block 6  |  Block 7  |
+| :---: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: |
+| **0** |     0     |     4     |     8     |     12    |     48    |     52    |     56    |     60    |
+| **1** |     1     |     5     |     9     |     13    |     49    |     53    |     57    |     61    |
+| **2** |     2     |     6     |     10    |     14    |     50    |     54    |     58    |     62    |
+| **3** |     3     |     7     |     11    |     15    |     51    |     55    |     59    |     63    |
+
+
+
 ##### b.) Random Sequence
 ##### c.) Mid-Repeat Blocks: 
