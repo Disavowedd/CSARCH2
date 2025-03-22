@@ -73,7 +73,11 @@ Once sets are full, the MRU policy evicts the most recently used block, causing 
 **Cache Outputs and Performance:**  
 - The simulation records **256 memory accesses** with **96 hits** and **160 misses**, giving a **37.50% hit rate** and **62.50% miss rate**.  
 - The average memory access time is:  
-$$ \frac{(96 \times 16) + (160 \times 177)}{256} = 116.62 \text{ ns} $$  
+The average memory access time is:  
+\[
+\frac{(96 \times 16) + (160 \times 177)}{256} = 116.62 \text{ ns}
+\]
+
   where:  
   - Cache hit time = **16 ns**  
   - Cache miss time = **177 ns**  
