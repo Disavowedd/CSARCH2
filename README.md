@@ -52,12 +52,13 @@ Walkthrough Video: https://drive.google.com/file/d/1UB8l4Ye78i3JIy7V5gtWQ2NEWmql
 |   3   |         |         |         |         |         |         |         |         |
 
 ##### a.) Sequential Sequence:
-**Initial Cache State and Memory Access Pattern**
+**Initial Cache State and Memory Access Pattern:**
+
 At the start, the cache is empty, so the first memory accesses result in cache misses. The set index is determined by:
-Set Index= ( Block Number)mod(Number of Sets). Once sets are full, the MRU policy evicts the most recently used block, causing frequent replacements when new blocks are introduced. After the cache is populated, repeated access to the same blocks results in cache hits. 
+Set Index = (Block Number)mod(Number of Sets). Once sets are full, the MRU policy evicts the most recently used block, causing frequent replacements when new blocks are introduced. After the cache is populated, repeated access to the same blocks results in cache hits. 
 
 Number of memory blocks: 1024
-FINAL CACHE MEMORY SNAPSHOT:
+**FINAL CACHE MEMORY SNAPSHOT:**
 |  Set  |  Block 0  |  Block 1  |  Block 2  |  Block 3  |  Block 4  |  Block 5  |  Block 6  |  Block 7  |
 | :---: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: |
 | **0** |     0     |     4     |     8     |     12    |     48    |     52    |     56    |     60    |
@@ -65,6 +66,7 @@ FINAL CACHE MEMORY SNAPSHOT:
 | **2** |     2     |     6     |     10    |     14    |     50    |     54    |     58    |     62    |
 | **3** |     3     |     7     |     11    |     15    |     51    |     55    |     59    |     63    |
 
+**Cache Outputs and Performance:**
 The simulation records **256 memory accesses with 96 hits and 160 misses**, giving a **37.50% hit rate** and **62.50% miss rate.**
 
 The average memory access time is: (96×16)+(160×177)/256 = **116.62ns**
