@@ -1,11 +1,14 @@
 # **CSARCH2 Cache Simulator**
 
+Walkthrough Video: https://drive.google.com/file/d/1HipP0E3Icc1ru5rPXftYyo5O1583sHqi/view?usp=sharing
+
 #### Submitted by:
 ##### CSARCH2 S12 Group 8
-Kyle Adrian Bibon
-Gian Raphael Blasco
-Kenneth Louis Mangulabnan
-Carlo San Buenaventura
+- Kyle Adrian Bibon
+- Gian Raphael Blasco
+- Kenneth Louis Mangulabnan
+- Antonio Enrique Monserrat
+- Carlo San Buenaventura
 
 
 ## **System Specifications**
