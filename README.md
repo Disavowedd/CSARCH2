@@ -65,14 +65,17 @@ FINAL CACHE MEMORY SNAPSHOT:
 | **2** |     2     |     6     |     10    |     14    |     50    |     54    |     58    |     62    |
 | **3** |     3     |     7     |     11    |     15    |     51    |     55    |     59    |     63    |
 
-The simulation records 256 memory accesses with 96 hits and 160 misses, giving a 37.50% hit rate and 62.50% miss rate. The average memory access time is: (96×16)+(160×177)/256 = 116.62ns
+The simulation records **256 memory accesses with 96 hits and 160 misses**, giving a **37.50% hit rate** and **62.50% miss rate.**
+
+The average memory access time is: (96×16)+(160×177)/256 = **116.62ns**
 where:
 - Cache hit time = 16 ns
 - Cache miss time = 177 ns
 
-The total memory access time is: 96×16+160×177 = 29856ns
+The total memory access time is: 96×16+160×177 = **29856ns**
 
 The cache initially experiences high miss rates due to filling and MRU-based replacements. However, once the working set stabilizes, hit rates improve, enhancing overall performance.
 
-##### b.) Random Sequence
+##### b.) Random Sequence:
+
 ##### c.) Mid-Repeat Blocks: 
