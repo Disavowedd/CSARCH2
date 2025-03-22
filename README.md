@@ -97,6 +97,7 @@ At the start, the cache is initially empty. Since the accesses are random, there
 | **3** |    875    |    371    |    883    |    923    |    611    |    311    |    991    |    783    |
 
 **Cache Outputs and Performance:**
+
 The simulation records **128 memory accesses with 5 hits and 123 misses**, giving a **3.91% hit rate** and **96.09% miss rate.**
 
 The average memory access time is: (5×16)+(123×177)/128 = **170.71ns**
@@ -124,6 +125,7 @@ In the mid-repeat blocks test case, the memory access pattern shows moderate lev
 | **3** |     3     |     11    |     19    |     27    |     51    |     55    |     59    |     63    |
 
 **Cache Outputs and Performance:**
+
 The simulation records **380 memory accesses with 196 hits and 184 misses**, giving a **51.58% hit rate** and **48.42% miss rate**.
 
 The average memory access time is: (196×16)+(184×177)/380 = **93.96ns**
