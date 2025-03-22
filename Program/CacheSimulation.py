@@ -1,5 +1,5 @@
 import random
-from PyQt5.QtWidgets import QApplication,QWidget,QHBoxLayout,QAbstractItemView,QTableWidgetItem,QPushButton,QLabel,QVBoxLayout,QComboBox,QTextEdit,QTableWidget,QSizePolicy,QSpinBox,QHeaderView,QGroupBox,QGridLayout
+from PyQt5.QtWidgets import QApplication,QWidget,QHBoxLayout,QAbstractItemView,QTableWidgetItem,QPushButton,QLabel,QVBoxLayout,QComboBox,QTextEdit,QTableWidget,QSizePolicy,QSpinBox,QHeaderView,QGroupBox,QGridLayout,QCheckBox
 import sys
 import time
 cache_blocks = 32 #2^5
@@ -85,7 +85,8 @@ class CacheSimulator(QWidget):
         cache_layout.addWidget(self.outputs_groupbox)
 
         menu_layout = QVBoxLayout()
-
+        self.step_by_step_qcheckbox = QCheckBox("Step-by-Step Mode")
+        menu_layout.addWidget(self.step_by_step_qcheckbox)
         self.memory_size_qlabel = QLabel('Enter Number of Memory Blocks:')
         self.memory_size_qinput = QSpinBox()
         self.memory_size_qinput.setButtonSymbols(2)
@@ -139,6 +140,7 @@ class CacheSimulator(QWidget):
         total_access, cache_hit, cache_miss = 0, 0, 0
         total_mem_access_time = 0
         global_counter = 0  # counter for MRU
+        step_by_step = self.step_by_step_qcheckbox.isChecked()
 
         self.log_output.append(f"Simulation Started with {memory_blocks} memory blocks and {test_case} test case")
         self.log_output.append(f"{'Access':<10}{'Set':<5}{'Result':<10}{'Access Time':<10}")
@@ -157,11 +159,9 @@ class CacheSimulator(QWidget):
         # Cache simulation loop
         for memory_block in sequence:
             total_access += 1
- 
-            set_index = (memory_block) % sets
-        
-            hit = False
+            set_index = memory_block % sets
 
+            hit = False
             # Check if block is in cache
             for way in range(ways):
                 if cache[set_index][way]['valid'] and cache[set_index][way]['block'] == memory_block:
@@ -187,7 +187,7 @@ class CacheSimulator(QWidget):
                     }
                     global_counter += 1
                     result = "MISS"
-
+                    
                 else:
                     # MRU Replacement
                     mru_index = max(range(ways), key=lambda w: cache[set_index][w]['mru'])  
@@ -206,13 +206,21 @@ class CacheSimulator(QWidget):
 
             self.log_output.append(f"{memory_block:<10}{set_index:<5}{result:<10}{access_time:<10}ns")
 
-        # Print final cache state
-        for set_index in range(sets):
-            for way in range(ways):
-                block = cache[set_index][way]
-                
+            if step_by_step:
+                block = cache[set_index][way if hit else (empty_block if empty_block is not None else mru_index)]
                 block_value = str(block['block']) if block['valid'] else "None"
-                self.cache_qtable.setItem(set_index, way + 1, QTableWidgetItem(block_value))
+                self.cache_qtable.setItem(set_index, (way if hit else (empty_block if empty_block is not None else mru_index)) + 1, QTableWidgetItem(block_value))
+
+                time.sleep(0.5)  
+                QApplication.processEvents()  
+
+        if not step_by_step:
+            # Print final cache state
+            for set_index in range(sets):
+                for way in range(ways):
+                    block = cache[set_index][way]
+                    block_value = str(block['block']) if block['valid'] else "None"
+                    self.cache_qtable.setItem(set_index, way + 1, QTableWidgetItem(block_value))
 
         # Compute performance metrics
         hit_rate = (cache_hit / total_access) * 100 if total_access > 0 else 0
