@@ -68,6 +68,7 @@ Set Index = (Block Number)mod(Number of Sets). Once sets are full, the MRU p
 | **3** |     3     |     7     |     11    |     15    |     51    |     55    |     59    |     63    |
 
 **Cache Outputs and Performance:**
+
 The simulation records **256 memory accesses with 96 hits and 160 misses**, giving a **37.50% hit rate** and **62.50% miss rate.**
 
 The average memory access time is: (96×16)+(160×177)/256 = **116.62ns**
@@ -75,10 +76,37 @@ where:
 - Cache hit time = 16 ns
 - Cache miss time = 177 ns
 
-The total memory access time is: 96×16+160×177 = **29856ns**
+The total memory access time is: 96×16+160×177 = **29,856ns**
 
 The cache initially experiences high miss rates due to filling and MRU-based replacements. However, once the working set stabilizes, hit rates improve, enhancing overall performance.
 
 ##### b.) Random Sequence:
+**Initial Cache State and Memory Access Pattern:**
+In the random sequence test case, the memory access pattern follows a random order, meaning that the accessed memory blocks are distributed without any predictable pattern. This type of access pattern is challenging for a cache to optimize because it lacks locality of reference, which makes it difficult for the cache to anticipate future accesses.
+
+At the start, the cache is initially empty. Since the accesses are random, there is no repetition or predictable order, causing frequent cache misses. The memory access count is 128, which reflects the number of memory requests processed by the cache during the simulation.
+
+**Number of memory blocks: 1024**
+
+**FINAL CACHE MEMORY SNAPSHOT:**
+|  Set  |  Block 0  |  Block 1  |  Block 2  |  Block 3  |  Block 4  |  Block 5  |  Block 6  |  Block 7  |
+| :---: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: |
+| **0** |    952    |    344    |    780    |    936    |     4     |    392    |    412    |    496    |
+| **1** |    81     |    357    |    297    |    25     |    121    |    237    |    853    |    425    |
+| **2** |    934    |    206    |    110    |    970    |    278    |    1014   |    150    |    918    |
+| **3** |    875    |    371    |    883    |    923    |    611    |    311    |    991    |    783    |
+
+**Cache Outputs and Performance:**
+The simulation records **128 memory accesses with 5 hits and 123 misses**, giving a **3.91% hit rate** and **96.09% miss rate.**
+
+The average memory access time is: (5×16)+(123×177)/128 = **170.71ns**
+where:
+- Cache hit time = 16 ns
+- Cache miss time = 177 ns
+
+The total memory access time is: (5×16)+(123×177) = **21,851ns**
+
+The low hit rate reflects the challenges posed by the random access pattern, which prevents the cache from taking advantage of temporal or spatial locality. The high miss rate results in frequent data fetching from the main memory, increasing the overall memory access time.
+
 
 ##### c.) Mid-Repeat Blocks: 
