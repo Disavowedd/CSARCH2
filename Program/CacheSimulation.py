@@ -6,11 +6,6 @@ cache_blocks = 32 #2^5
 cache_line = 16 #2^4
 sets = 4 #2^2
 
-#tried
-#TAG = 32 - int(sets).bit_length() - int(cache_line).bit_length()
-#SET = int(sets).bit_length()
-#WORD = int(cache_line).bit_length()
-
 class CacheSimulator(QWidget):
     def __init__(self):
         super().__init__()
@@ -137,6 +132,7 @@ class CacheSimulator(QWidget):
         cache_blocks = 32
         sets = 4  
         ways = cache_blocks // sets  
+        cache_line = 16
 
         cache = [[{'block': None, 'valid': False, 'mru': 0} for _ in range(ways)] for _ in range(sets)]
 
@@ -205,7 +201,7 @@ class CacheSimulator(QWidget):
                     result = "REPLACE"
 
             # Compute access time
-            access_time = 1 if hit else 100 # QUESTION: Why 100?
+            access_time = (cache_line * 1) if hit else (1 + (cache_line * 10) + (cache_line * 1))
             total_mem_access_time += access_time
 
             self.log_output.append(f"{memory_block:<10}{set_index:<5}{result:<10}{access_time:<10}ns")
